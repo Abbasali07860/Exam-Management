@@ -85,18 +85,22 @@
                 @enderror
             </div>
 
-            <!-- Assign Users -->
+            <!-- Assign Students -->
             <div class="mb-6">
-                <label for="user_ids" class="block text-sm font-medium text-gray-700 mb-2">Assign to Users</label>
-                <select name="user_ids[]" id="user_ids" multiple
+                <label for="student_ids" class="block text-sm font-medium text-gray-700 mb-2">Assign to Students (Optional)</label>
+                <select name="user_ids[]" id="student_ids" multiple
                         class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-200">
-                    @foreach ($users as $user)
-                        <option value="{{ $user->id }}" {{ in_array($user->id, old('user_ids', [])) ? 'selected' : '' }}>
-                            {{ $user->name }} ({{ $user->role }})
-                        </option>
-                    @endforeach
+                    @if($users->where('role', 'student')->isNotEmpty())
+                        @foreach ($users->where('role', 'student') as $student)
+                            <option value="{{ $student->id }}" {{ in_array($student->id, old('user_ids', [])) ? 'selected' : '' }}>
+                                {{ $student->name }} ({{ $student->email }})
+                            </option>
+                        @endforeach
+                    @else
+                        <option value="" disabled>No students available</option>
+                    @endif
                 </select>
-                <p class="text-sm text-gray-500 mt-1">Hold Ctrl/Cmd to select multiple users</p>
+                <p class="text-sm text-gray-500 mt-1">Hold Ctrl/Cmd to select multiple students</p>
                 @error('user_ids')
                     <span class="text-red-600 text-sm mt-1">{{ $message }}</span>
                 @enderror

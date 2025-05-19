@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\admin;
 
+use App\Http\Controllers\admin\Controller;
 use Illuminate\Http\Request;
-use App\Models\Activity;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 
@@ -26,34 +26,18 @@ class LoginController extends Controller
         }
 
         if (Auth::attempt($request->only('email', 'password'))) {
-            $this->logActivity('Logged in');
-            return redirect()->route('dashboard')->with('success', 'Logged in successfully.');
+            return redirect()->route('admin.dashboard')->with('success', 'Logged in successfully.');
         }
+
         return back()->with('error', 'Invalid credentials.')->withInput();
     }
 
     public function logout()
     {
         if (Auth::check()) {
-            $this->logActivity('Logged out');
             Auth::logout();
         }
-        return redirect()->route('login')->with('success', 'Logged out successfully.');
-    }
 
-    private function logActivity(string $activity)
-    {
-        $existingActivity = Activity::where('user_id', Auth::id())              
-            ->where('activity', $activity)
-            ->first();
-
-        if ($existingActivity) {
-            $existingActivity->touch(); // updates 'updated_at'
-        } else {
-            Activity::create([
-                'user_id' => Auth::id(),                
-                'activity' => $activity,
-            ]);
-        }
+        return redirect()->route('admin.login')->with('success', 'Logged out successfully.');
     }
 }

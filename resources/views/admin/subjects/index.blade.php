@@ -4,23 +4,19 @@
 <div class="container mx-auto px-6 py-16 bg-gradient-to-br from-gray-50 to-gray-100 rounded-3xl shadow-2xl max-w-7xl border border-gray-200">
     <!-- Header Section -->
     <div class="flex justify-between items-center mb-12">
-        <h2 class="text-4xl font-extrabold bg-gradient-to-r from-blue-700 to-indigo-700 bg-clip-text text-transparent tracking-tight">
+        <h2 class="flex items-center gap-2 text-3xl font-extrabold bg-gradient-to-r from-indigo-600 to-green-600 bg-clip-text text-transparent">
+            <span class="text-indigo-600">🧾</span> <!-- Book icon for subjects -->
             Subject Management
         </h2>
+
         <div class="flex gap-6">
             <a href="{{ route('admin.subjects.create') }}"
-               class="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-8 py-3 rounded-full text-base font-bold shadow-lg hover:shadow-glow hover:scale-105 transition-all duration-300">
-                <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
-                </svg>
-                Add New Subject
+               class="bg-gradient-to-r from-white-500 to-white-600 text-black px-6 py-3 rounded-xl text-sm font-semibold shadow-lg transition-transform transform hover:scale-105">
+                ➕ Add New Subject
             </a>
             <a href="{{ route('admin.subjects.assign') }}"
-               class="flex items-center gap-2 bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-700 hover:to-indigo-800 text-white px-8 py-3 rounded-full text-base font-bold shadow-lg hover:shadow-glow hover:scale-105 transition-all duration-300">
-                <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 14v6m-3-3h6M6 10h2a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2zm10 0h2a2 2 0 002-2V6a2 2 0 00-2-2h-2a2 2 0 00-2 2v2a2 2 0 002 2zM6 20h2a2 2 0 002-2v-2a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2z"/>
-                </svg>
-                Assign Subjects
+               class="bg-gradient-to-r from-white-500 to-white-600 text-black px-6 py-3 rounded-xl text-sm font-semibold shadow-lg transition-transform transform hover:scale-105">
+                📘 Assign Subjects
             </a>
         </div>
     </div>
@@ -77,7 +73,6 @@
             </div>
         </div>
     </form>
-
     <!-- Subjects Table -->
     <div class="overflow-x-auto rounded-2xl bg-white shadow-2xl border border-gray-200 animate-fade-in">
         <table class="min-w-full divide-y divide-gray-200 text-base">
@@ -114,10 +109,7 @@
                             <td class="px-8 py-5 flex space-x-4">
                                 <a href="{{ route('admin.subjects.edit', $subject->id) }}"
                                    class="flex items-center gap-2 bg-gradient-to-r from-gray-200 to-gray-300 text-gray-800 px-6 py-2 rounded-full font-semibold hover:from-gray-300 hover:to-gray-400 hover:shadow-glow hover:scale-105 transition-all duration-300">
-                                    <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
-                                    </svg>
-                                    Edit
+                                    ✏️ Edit
                                 </a>
                                 <form method="POST" action="{{ route('admin.subjects.destroy', $subject->id) }}" class="inline-block">
                                     @csrf
@@ -125,10 +117,7 @@
                                     <button type="submit"
                                             class="flex items-center gap-2 bg-gradient-to-r from-red-500 to-red-600 text-white px-6 py-2 rounded-full font-semibold hover:from-red-600 hover:to-red-700 hover:shadow-glow hover:scale-105 transition-all duration-300"
                                             onclick="return confirm('Are you sure you want to delete this subject?')">
-                                        <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5-4h4m-4 0H7a2 2 0 00-2 2v1h14V5a2 2 0 00-2-2h-3m-1 4v12"/>
-                                        </svg>
-                                        Delete
+                                      🗑️ Delete
                                     </button>
                                 </form>
                             </td>

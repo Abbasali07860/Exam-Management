@@ -3,10 +3,14 @@
 @section('content')
 <div class="container mx-auto px-4 p-12 bg-gradient-to-br from-gray-100 to-gray-200 rounded-2xl shadow-2xl max-w-7xl">
     <div class="flex justify-between items-center mb-8">
-        <h2 class="text-3xl font-extrabold text-gray-900">Class Management</h2>
+        <h2 class="flex items-center gap-2 text-3xl font-extrabold bg-gradient-to-r from-indigo-600 to-green-600 bg-clip-text text-transparent">
+            <span class="text-indigo-600">🏫</span> <!-- School icon for class -->
+            Class Management
+        </h2>
+
         <a href="{{ route('admin.classrooms.create') }}"
-           class="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-6 py-3 rounded-full text-base font-bold border border-gray-200 shadow-md hover:shadow-glow transition-all duration-300">
-            Add New Class
+           class="inline-flex items-center gap-2 bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-amber-400 hover:to-amber-500 text-black font-semibold px-5 py-3 rounded-xl shadow-lg transition-transform transform hover:scale-105">
+           ➕ Add New Class
         </a>
     </div>
 
@@ -41,16 +45,17 @@
                             </td>
                             <td class="px-6 py-4 space-x-4">
                                 <a href="{{ route('admin.classrooms.edit', $classroom->id) }}"
-                                   class="bg-gradient-to-r from-gray-200 to-gray-300 text-gray-800 px-5 py-2 rounded-full font-semibold hover:from-gray-300 hover:to-gray-400 hover:shadow-glow transition-all duration-300">
-                                    Edit
+                                   class="bg-gradient-to-r from-gray-200 to-gray-300 text-gray-800 px-5 py-2 rounded-lg font-semibold hover:from-gray-300 hover:to-gray-400 hover:shadow-glow transition-all duration-300">
+                                    ✏️ <span>Edit</span>
                                 </a>
                                 <form method="POST" action="{{ route('admin.classrooms.destroy', $classroom->id) }}" class="inline-block">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit"
-                                            class="bg-gradient-to-r from-red-500 to-red-600 text-white px-5 py-2 rounded-full font-semibold hover:from-red-600 hover:to-red-700 hover:shadow-glow transition-all duration-300"
-                                            onclick="return confirm('Are you sure you want to delete this class?')">
-                                        Delete
+                                        class="flex items-center gap-2 bg-red-600 text-white px-4 py-2 rounded-lg font-semibold 
+                                        hover:bg-red-700 transition-all duration-300 shadow-md"
+                                        onclick="return confirm('Are you sure you want to delete this class?')">
+                                        🗑️ <span>Delete</span>
                                     </button>
                                 </form>
                             </td>

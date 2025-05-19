@@ -1,29 +1,32 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\admin;
 
+use App\Http\Controllers\admin\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
-class StudentController extends Controller
+class TeacherController extends Controller
 {
     private const PROFILE_IMAGE_PATH = 'profile_images';
 
     public function __construct()
     {
-        $this->middleware('role:student');
+        $this->middleware('role:teacher');
     }
 
     public function dashboard()
     {
-        return view('student.dashboard', ['user' => Auth::user()]);
+        $students = User::where('role', 'student')->paginate(5);
+        return view('teacher.dashboard', ['students' => $students]);
     }
 
     public function profile()
     {
-        return view('student.profile', ['user' => Auth::user()]);
+        return view('teacher.profile', ['user' => Auth::user()]);
     }
 
     public function updateProfile(Request $request)
@@ -57,6 +60,6 @@ class StudentController extends Controller
 
         $user->save();
 
-        return redirect()->route('student.profile')->with('success', 'Profile updated successfully.');
+        return redirect()->route('teacher.profile')->with('success', 'Profile updated successfully.');
     }
 }

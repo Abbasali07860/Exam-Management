@@ -17,7 +17,7 @@
         </div>
 
         <div class="mb-6">
-            <label class="block text-sm font-semibold text-gray-700 mb-2">Assign Subjects (Optional)</label>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">Assign Subjects</label>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-h-64 overflow-y-auto p-4 border border-gray-200 rounded-xl">
                 @if($subjects->isEmpty())
                     <p class="text-gray-500 text-sm">No subjects available. Please add subjects first.</p>

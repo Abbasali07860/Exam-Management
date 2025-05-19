@@ -1,121 +1,111 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container mx-auto px-4 py-12 max-w-2xl">
-    <div class="bg-white p-8 rounded-xl shadow-2xl">
-        <h2 class="text-2xl font-bold text-gray-900 mb-6">Edit Exam</h2>
+<div class="container mx-auto px-6 py-16 bg-gradient-to-br from-slate-100 to-slate-200 rounded-3xl shadow-2xl max-w-8xl">
+    <h2 class="text-4xl font-black bg-gradient-to-r from-teal-600 to-teal-800 bg-clip-text text-black tracking-tight mb-12">
+        Edit Exam: {{ $exam->title }}
+    </h2>
 
-        @if (session('success'))
-            <div class="mb-6 p-4 bg-green-100 text-green-700 rounded-lg">
-                {{ session('success') }}
-            </div>
-        @endif
+    <form method="POST" action="{{ route('admin.exams.update', $exam) }}" class="bg-slate-50 p-8 rounded-2xl shadow-lg border border-slate-200">
+        @csrf
+        @method('PUT')
 
-        <form method="POST" action="{{ route('admin.exams.update', $exam) }}">
-            @csrf
-            @method('PUT')
-
-            <!-- Exam Title -->
-            <div class="mb-6">
-                <label for="title" class="block text-sm font-medium text-gray-700 mb-2">Exam Title</label>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <!-- Title -->
+            <div class="lg:col-span-2">
+                <label for="title" class="block text-sm font-semibold text-slate-800 mb-2">Exam Title</label>
                 <input type="text" name="title" id="title" value="{{ old('title', $exam->title) }}"
-                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-200"
-                       required>
+                       class="w-full border-2 border-slate-300 px-4 py-3 rounded-xl focus:ring-teal-500 focus:border-teal-500 transition-all duration-300 text-slate-700">
                 @error('title')
-                    <span class="text-red-600 text-sm mt-1">{{ $message }}</span>
+                    <p class="text-red-500 text-sm mt-2 p-2 bg-red-50 rounded-lg border border-red-200">{{ $message }}</p>
                 @enderror
             </div>
 
             <!-- Description -->
-            <div class="mb-6">
-                <label for="description" class="block text-sm font-medium text-gray-700 mb-2">Description</label>
-                <textarea name="description" id="description"
-                          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-200"
-                          rows="4">{{ old('description', $exam->description) }}</textarea>
+            <div class="lg:col-span-2">
+                <label for="description" class="block text-sm font-semibold text-slate-800 mb-2">Description (Optional)</label>
+                <textarea name="description" id="description" class="w-full border-2 border-slate-300 px-4 py-3 rounded-xl focus:ring-teal-500 focus:border-teal-500 transition-all duration-300 text-slate-700" rows="5">{{ old('description', $exam->description) }}</textarea>
                 @error('description')
-                    <span class="text-red-600 text-sm mt-1">{{ $message }}</span>
+                    <p class="text-red-500 text-sm mt-2 p-2 bg-red-50 rounded-lg border border-red-200">{{ $message }}</p>
                 @enderror
             </div>
 
             <!-- Start Date -->
-            <div class="mb-6">
-                <label for="start_date" class="block text-sm font-medium text-gray-700 mb-2">Start Date</label>
-                <input type="datetime-local" name="start_date" id="start_date"
-                       value="{{ old('start_date', $exam->start_date->format('Y-m-d\TH:i')) }}"
-                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-200"
-                       required>
+            <div>
+                <label for="start_date" class="block text-sm font-semibold text-slate-800 mb-2">Start Date</label>
+                <input type="datetime-local" name="start_date" id="start_date" 
+                       value="{{ old('start_date', $exam->start_date ? $exam->start_date->format('Y-m-d\TH:i') : '') }}"
+                       class="w-full border-2 border-slate-300 px-4 py-3 rounded-xl focus:ring-teal-500 focus:border-teal-500 transition-all duration-300 text-slate-700">
                 @error('start_date')
-                    <span class="text-red-600 text-sm mt-1">{{ $message }}</span>
+                    <p class="text-red-500 text-sm mt-2 p-2 bg-red-50 rounded-lg border border-red-200">{{ $message }}</p>
                 @enderror
             </div>
 
             <!-- End Date -->
-            <div class="mb-6">
-                <label for="end_date" class="block text-sm font-medium text-gray-700 mb-2">End Date</label>
-                <input type="datetime-local" name="end_date" id="end_date"
-                       value="{{ old('end_date', $exam->end_date->format('Y-m-d\TH:i')) }}"
-                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-200"
-                       required>
+            <div>
+                <label for="end_date" class="block text-sm font-semibold text-slate-800 mb-2">End Date</label>
+                <input type="datetime-local" name="end_date" id="end_date" 
+                       value="{{ old('end_date', $exam->end_date ? $exam->end_date->format('Y-m-d\TH:i') : '') }}"
+                       class="w-full border-2 border-slate-300 px-4 py-3 rounded-xl focus:ring-teal-500 focus:border-teal-500 transition-all duration-300 text-slate-700">
                 @error('end_date')
-                    <span class="text-red-600 text-sm mt-1">{{ $message }}</span>
+                    <p class="text-red-500 text-sm mt-2 p-2 bg-red-50 rounded-lg border border-red-200">{{ $message }}</p>
                 @enderror
             </div>
 
             <!-- Duration -->
-            <div class="mb-6">
-                <label for="duration" class="block text-sm font-medium text-gray-700 mb-2">Duration (minutes)</label>
+            <div>
+                <label for="duration" class="block text-sm font-semibold text-slate-800 mb-2">Duration (in minutes)</label>
                 <input type="number" name="duration" id="duration" value="{{ old('duration', $exam->duration) }}"
-                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-200"
-                       required min="1">
+                       class="w-full border-2 border-slate-300 px-4 py-3 rounded-xl focus:ring-teal-500 focus:border-teal-500 transition-all duration-300 text-slate-700" min="1">
                 @error('duration')
-                    <span class="text-red-600 text-sm mt-1">{{ $message }}</span>
+                    <p class="text-red-500 text-sm mt-2 p-2 bg-red-50 rounded-lg border border-red-200">{{ $message }}</p>
                 @enderror
             </div>
 
             <!-- Status -->
-            <div class="mb-6">
-                <label for="status" class="block text-sm font-medium text-gray-700 mb-2">Status</label>
-                <select name="status" id="status"
-                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-200"
-                        required>
+            <div>
+                <label for="status" class="block text-sm font-semibold text-slate-800 mb-2">Status</label>
+                <select name="status" id="status" class="w-full border-2 border-slate-300 px-4 py-3 rounded-xl focus:ring-teal-500 focus:border-teal-500 transition-all duration-300 text-slate-700">
                     <option value="active" {{ old('status', $exam->status) == 'active' ? 'selected' : '' }}>Active</option>
                     <option value="inactive" {{ old('status', $exam->status) == 'inactive' ? 'selected' : '' }}>Inactive</option>
                 </select>
                 @error('status')
-                    <span class="text-red-600 text-sm mt-1">{{ $message }}</span>
+                    <p class="text-red-500 text-sm mt-2 p-2 bg-red-50 rounded-lg border border-red-200">{{ $message }}</p>
                 @enderror
             </div>
 
-            <!-- Assign Users -->
-            <div class="mb-6">
-                <label for="user_ids" class="block text-sm font-medium text-gray-700 mb-2">Assign to Users</label>
-                <select name="user_ids[]" id="user_ids" multiple
-                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-200">
-                    @foreach ($users as $user)
-                        <option value="{{ $user->id }}"
-                                {{ in_array($user->id, old('user_ids', $exam->users->pluck('id')->toArray())) ? 'selected' : '' }}>
-                            {{ $user->name }} ({{ $user->role }})
-                        </option>
-                    @endforeach
+            <!-- Assign Students -->
+            <div class="lg:col-span-2">
+                <label for="student_ids" class="block text-sm font-semibold text-slate-800 mb-2">Assign Students (Optional)</label>
+                <select name="student_ids[]" id="student_ids" multiple class="w-full border-2 border-slate-300 px-4 py-3 rounded-xl focus:ring-teal-500 focus:border-teal-500 transition-all duration-300 text-slate-700">
+                    @if(isset($students) && $students->isNotEmpty())
+                        @foreach($students as $student)
+                            <option value="{{ $student->id }}" {{ $exam->students->contains($student->id) ? 'selected' : '' }}>
+                                {{ $student->name }} ({{ $student->email }})
+                            </option>
+                        @endforeach
+                    @else
+                        <option value="" disabled>No students available</option>
+                    @endif
                 </select>
-                <p class="text-sm text-gray-500 mt-1">Hold Ctrl/Cmd to select multiple users</p>
-                @error('user_ids')
-                    <span class="text-red-600 text-sm mt-1">{{ $message }}</span>
+                <p class="text-sm text-gray-500 mt-1">Hold Ctrl/Cmd to select multiple students</p>
+                @error('student_ids')
+                    <p class="text-red-500 text-sm mt-2 p-2 bg-red-50 rounded-lg border border-red-200">{{ $message }}</p>
                 @enderror
             </div>
+        </div>
 
-            <!-- Submit and Cancel Buttons -->
-            <div class="flex justify-end space-x-4">
-                <button type="submit"
-                        class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 transition duration-200">
-                    Update Exam
-                </button>
-                <a href="{{ route('admin.exams.index') }}"
-                   class="bg-gray-300 text-gray-800 px-6 py-2 rounded-lg hover:bg-gray-400 transition duration-200">
-                    Cancel
-                </a>
-            </div>
-        </form>
-    </div>
+        <!-- Buttons -->
+        <div class="mt-8 flex justify-end gap-4">
+            <a href="{{ route('admin.exams.index') }}"
+               class="bg-gradient-to-r from-slate-200 to-slate-300 text-slate-800 px-6 py-3 rounded-xl text-base font-bold border border-slate-200 shadow-lg hover:scale-105 hover:shadow-xl transition-all duration-300">
+                Cancel
+            </a>
+            <button type="submit"
+                    class="bg-gradient-to-r from-teal-600 to-teal-700 hover:from-amber-500 hover:to-amber-600 text-black px-6 py-3 rounded-xl text-base font-bold border border-teal-200 shadow-lg hover:scale-105 hover:shadow-xl transition-all duration-300">
+                Update Exam
+            </button>
+        </div>
+    </form>
 </div>
 @endsection

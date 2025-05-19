@@ -12,7 +12,7 @@
             <div class="alert-success">{{ session('success') }}</div>
         @endif
 
-        <form action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data" class="edit-form">
+        <form action="{{ route('admin.profile.update') }}" method="POST" enctype="multipart/form-data" class="edit-form">
             @csrf
             <div class="form-group">
                 <label for="name">Username</label>

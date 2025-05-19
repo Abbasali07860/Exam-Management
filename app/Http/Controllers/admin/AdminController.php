@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\admin;
 
+use App\Http\Controllers\admin\Controller;
 use App\Models\User;
 use App\Http\Middleware\RoleMiddleware;
 use Illuminate\Http\Request;
@@ -41,12 +42,12 @@ class AdminController extends Controller
 
         $users = $query->paginate(5);
 
-        return view('admin.list', ['users' => $users]);
+        return view('admin.users.list', ['users' => $users]);
     }
 
     public function create()
     {
-        return view('admin.createuser');
+        return view('admin.users.createuser');
     }
 
     public function store(Request $request)
@@ -81,7 +82,7 @@ class AdminController extends Controller
 
     public function edit(User $user)
     {
-        return view('admin.edituser', ['user' => $user]);
+        return view('admin.users.edituser', ['user' => $user]);
     }
 
     public function update(Request $request, User $user)

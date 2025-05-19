@@ -53,7 +53,7 @@ class User extends Authenticatable
 
     public function exams()
     {
-        return $this->belongsToMany(Exam::class, 'exam_user');
+        return $this->belongsToMany(Exam::class, 'exam_user')>withTimestamps();;
     }
 
     public function subjects()
