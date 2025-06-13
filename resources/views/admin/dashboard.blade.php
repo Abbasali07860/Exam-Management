@@ -3,19 +3,25 @@
 @section('title', 'Exam Dashboard')
 
 @section('content')
-<div class="w-full min-h-screen bg-[#f2f6ff] p-6">
-    <div class="w-full bg-white rounded-3xl shadow-xl border border-indigo-100 p-8">
+@php
+use Illuminate\Support\Facades\Auth;
+@endphp
+<div class="w-full min-h-screen bg-gray-100 p-4 sm:p-6 lg:p-8">
+    <div class="max-w-7xl mx-auto bg-white rounded-3xl shadow-2xl border border-gray-200 p-6 sm:p-8 lg:p-10">
 
         <!-- Header -->
-        <div class="flex justify-between items-start flex-wrap gap-4 mb-10">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
             <div>
-                <h1 class="text-4xl font-extrabold text-[#4b27c7]">Exam Dashboard</h1>
-                <p class="text-md text-gray-500 mt-1">Welcome, {{ Auth::user()->name }}</p>
-                <p class="text-sm text-gray-400">{{ Auth::user()->email }}</p>
+                @if (Auth::check())
+                    <p class="text-lg font-semibold text-gray-700">Welcome, {{ Auth::user()->name }}</p>
+                    <p class="text-sm text-gray-500">{{ Auth::user()->email }}</p>
+                @else
+                    <p class="text-lg font-semibold text-gray-700">Welcome, Guest</p>
+                @endif
             </div>
             <div>
                 <a href="{{ route('admin.exams.index') }}"
-                   class="inline-block bg-gradient-to-r from-indigo-500 to-indigo-700 text-white px-6 py-2 rounded-full shadow hover:shadow-md transition duration-300">
+                   class="inline-block bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-6 py-2 rounded-full shadow-lg hover:shadow-xl transition-transform transform hover:scale-105">
                     View All Exams
                 </a>
             </div>
@@ -23,46 +29,43 @@
 
         <!-- Statistic Cards -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-    <!-- Total Exams -->
-            <div class="bg-gradient-to-r from-indigo-500 to-purple-600 text-white p-6 rounded-2xl shadow-xl hover:scale-105 transition duration-300">
+            <!-- Total Exams -->
+            <div class="bg-gradient-to-br from-indigo-600 to-purple-700 text-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-transform transform hover:scale-105">
                 <div class="flex items-center space-x-4">
-                    <i class="fas fa-book text-4xl"></i>
+                    <i class="fas fa-book text-3xl" aria-hidden="true"></i>
                     <div>
                         <p class="text-sm font-medium">Total Exams</p>
-                        <h2 class="text-3xl font-bold">{{ $totalExams }}</h2>
+                        <h2 class="text-2xl font-bold" aria-label="Total exams count">{{ $totalExams }}</h2>
                     </div>
                 </div>
             </div>
 
-            <!-- Total Students (FIXED) -->
-            <div class="bg-gradient-to-r from-green-500 to-emerald-600 text-white p-6 rounded-2xl shadow-xl hover:scale-105 transition duration-300">
+            <!-- Total Students -->
+            <div class="bg-gradient-to-br from-green-600 to-emerald-700 text-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-transform transform hover:scale-105">
                 <div class="flex items-center space-x-4">
-                    <i class="fas fa-users text-4xl"></i>
+                    <i class="fas fa-users text-3xl" aria-hidden="true"></i>
                     <div>
                         <p class="text-sm font-medium">Total Students</p>
-                        <h2 class="text-3xl font-bold">{{ $totalUsers }}</h2>
+                        <h2 class="text-2xl font-bold" aria-label="Total students count">{{ $totalUsers }}</h2>
                     </div>
                 </div>
             </div>
 
             <!-- Results Published -->
-            <div class="bg-gradient-to-r from-pink-500 to-pink-400 text-white p-6 rounded-2xl shadow-xl hover:scale-105 transition duration-300">
+            <div class="bg-gradient-to-br from-pink-600 to-rose-500 text-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-transform transform hover:scale-105">
                 <div class="flex items-center space-x-4">
-                    <i class="fas fa-check-circle text-4xl"></i>
+                    <i class="fas fa-check-circle text-3xl" aria-hidden="true"></i>
                     <div>
                         <p class="text-sm font-medium">Results Published</p>
-                        <h2 class="text-3xl font-bold">0</h2>
+                        <h2 class="text-2xl font-bold" aria-label="Results published count">0</h2>
                     </div>
                 </div>
             </div>
         </div>
 
-
-
         <!-- Upcoming Exams -->
-        <div class="bg-white border border-indigo-100 rounded-2xl p-6 shadow-md">
-            <h2 class="text-2xl font-semibold text-[#4b27c7] mb-4">Upcoming Exams</h2>
-
+        <div class="bg-white border border-gray-200 rounded-2xl p-6 shadow-md">
+            <h2 class="text-xl font-semibold text-indigo-700 mb-4">Upcoming Exams</h2>
             @if($upcomingExams->isEmpty())
                 <div class="text-center text-gray-500 py-10">No upcoming exams scheduled.</div>
             @else
@@ -70,7 +73,7 @@
                     @foreach($upcomingExams as $exam)
                         <div class="flex justify-between items-center bg-indigo-50 p-4 rounded-xl shadow-sm hover:shadow-md transition duration-200">
                             <div class="flex items-center gap-3">
-                                <i class="fas fa-calendar-alt text-indigo-500 text-xl"></i>
+                                <i class="fas fa-calendar-alt text-indigo-500 text-lg" aria-hidden="true"></i>
                                 <div>
                                     <p class="font-medium text-gray-800">{{ $exam->title }}</p>
                                     <p class="text-sm text-gray-500">{{ $exam->start_date->format('M d, Y H:i') }}</p>
@@ -82,6 +85,4 @@
                 </div>
             @endif
         </div>
-    </div>
-</div>
 @endsection

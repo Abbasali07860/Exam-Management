@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\admin;
 
-use App\Http\Controllers\admin\Controller;
+use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Http\Middleware\RoleMiddleware;
 use Illuminate\Http\Request;
@@ -25,18 +25,16 @@ class AdminController extends Controller
 
         if ($request->has('search')) {
             $search = $request->input('search');
-            $query->where('name', 'like', "%$search%")
-                ->orWhere('email', 'like', "%$search%")
-                ->orWhere('mobile', 'like', "%$search%");
+            $query->where('name', 'like', "%{$search}%")
+                  ->orWhere('email', 'like', "%{$search}%")
+                  ->orWhere('mobile', 'like', "%{$search}%");
         }
 
-        // Filter by status
-        if ($request->has('status')) {
+        if ($request->has('status') && $request->input('status') !== '') {
             $query->where('status', $request->input('status'));
         }
 
-        // Filter by role
-        if ($request->has('role')) {
+        if ($request->has('role') && $request->input('role') !== '') {
             $query->where('role', $request->input('role'));
         }
 

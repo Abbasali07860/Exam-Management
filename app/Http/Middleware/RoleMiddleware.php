@@ -8,19 +8,15 @@ use Illuminate\Support\Facades\Auth;
 
 class RoleMiddleware
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     * @param  mixed ...$roles
-     * @return mixed
-     */
-    public function handle(Request $request, Closure $next, ...$roles)
+    public function handle(Request $request, Closure $next, $role)
     {
         $user = Auth::user();
 
-        if (!$user || !$user->hasAnyRole($roles)) {
+        if (!$user) {
+            return redirect()->route('login')->with('error', 'Please log in to access this page.');
+        }
+
+        if (!$user->hasAnyRole($role)) {
             abort(403, 'Unauthorized');
         }
 

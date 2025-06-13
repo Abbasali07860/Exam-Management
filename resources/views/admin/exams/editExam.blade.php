@@ -21,6 +21,22 @@
                 @enderror
             </div>
 
+            <!-- Subject -->
+            <div>
+                <label for="subject_id" class="block text-sm font-semibold text-slate-800 mb-2">Subject</label>
+                <select name="subject_id" id="subject_id" class="w-full border-2 border-slate-300 px-4 py-3 rounded-xl focus:ring-teal-500 focus:border-teal-500 transition-all duration-300 text-slate-700" required>
+                    <option value="" disabled>Select a subject</option>
+                    @foreach($subjects as $subject)
+                        <option value="{{ $subject->id }}" {{ old('subject_id', $exam->subject_id) == $subject->id ? 'selected' : '' }}>
+                            {{ $subject->name }}
+                        </option>
+                    @endforeach
+                </select>
+                @error('subject_id')
+                    <p class="text-red-500 text-sm mt-2 p-2 bg-red-50 rounded-lg border border-red-200">{{ $message }}</p>
+                @enderror
+            </div>
+
             <!-- Description -->
             <div class="lg:col-span-2">
                 <label for="description" class="block text-sm font-semibold text-slate-800 mb-2">Description (Optional)</label>
@@ -32,9 +48,9 @@
 
             <!-- Start Date -->
             <div>
-                <label for="start_date" class="block text-sm font-semibold text-slate-800 mb-2">Start Date</label>
+                <label for="start_date" class="block text-sm font-semibold text-slate-800 mb-2">Start Date (IST)</label>
                 <input type="datetime-local" name="start_date" id="start_date" 
-                       value="{{ old('start_date', $exam->start_date ? $exam->start_date->format('Y-m-d\TH:i') : '') }}"
+                       value="{{ old('start_date', $exam->start_date ? $exam->start_date->setTimezone('Asia/Kolkata')->format('Y-m-d\TH:i') : '') }}"
                        class="w-full border-2 border-slate-300 px-4 py-3 rounded-xl focus:ring-teal-500 focus:border-teal-500 transition-all duration-300 text-slate-700">
                 @error('start_date')
                     <p class="text-red-500 text-sm mt-2 p-2 bg-red-50 rounded-lg border border-red-200">{{ $message }}</p>
@@ -43,9 +59,9 @@
 
             <!-- End Date -->
             <div>
-                <label for="end_date" class="block text-sm font-semibold text-slate-800 mb-2">End Date</label>
+                <label for="end_date" class="block text-sm font-semibold text-slate-800 mb-2">End Date (IST)</label>
                 <input type="datetime-local" name="end_date" id="end_date" 
-                       value="{{ old('end_date', $exam->end_date ? $exam->end_date->format('Y-m-d\TH:i') : '') }}"
+                       value="{{ old('end_date', $exam->end_date ? $exam->end_date->setTimezone('Asia/Kolkata')->format('Y-m-d\TH:i') : '') }}"
                        class="w-full border-2 border-slate-300 px-4 py-3 rounded-xl focus:ring-teal-500 focus:border-teal-500 transition-all duration-300 text-slate-700">
                 @error('end_date')
                     <p class="text-red-500 text-sm mt-2 p-2 bg-red-50 rounded-lg border border-red-200">{{ $message }}</p>
@@ -74,22 +90,22 @@
                 @enderror
             </div>
 
-            <!-- Assign Students -->
+            <!-- Assign users -->
             <div class="lg:col-span-2">
-                <label for="student_ids" class="block text-sm font-semibold text-slate-800 mb-2">Assign Students (Optional)</label>
-                <select name="student_ids[]" id="student_ids" multiple class="w-full border-2 border-slate-300 px-4 py-3 rounded-xl focus:ring-teal-500 focus:border-teal-500 transition-all duration-300 text-slate-700">
-                    @if(isset($students) && $students->isNotEmpty())
-                        @foreach($students as $student)
-                            <option value="{{ $student->id }}" {{ $exam->students->contains($student->id) ? 'selected' : '' }}>
-                                {{ $student->name }} ({{ $student->email }})
+                <label for="user_ids" class="block text-sm font-semibold text-slate-800 mb-2">Assign users (Optional)</label>
+                <select name="user_ids[]" id="user_ids" multiple class="w-full border-2 border-slate-300 px-4 py-3 rounded-xl focus:ring-teal-500 focus:border-teal-500 transition-all duration-300 text-slate-700">
+                    @if(isset($users) && $users->isNotEmpty())
+                        @foreach($users as $user)
+                            <option value="{{ $user->id }}" {{ $exam->users->contains($user->id) ? 'selected' : '' }}>
+                                {{ $user->name }} ({{ $user->email }})
                             </option>
                         @endforeach
                     @else
-                        <option value="" disabled>No students available</option>
+                        <option value="" disabled>No users available</option>
                     @endif
                 </select>
-                <p class="text-sm text-gray-500 mt-1">Hold Ctrl/Cmd to select multiple students</p>
-                @error('student_ids')
+                <p class="text-sm text-gray-500 mt-1">Hold Ctrl/Cmd to select multiple users</p>
+                @error('user_ids')
                     <p class="text-red-500 text-sm mt-2 p-2 bg-red-50 rounded-lg border border-red-200">{{ $message }}</p>
                 @enderror
             </div>

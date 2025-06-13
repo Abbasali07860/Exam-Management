@@ -65,7 +65,8 @@
                     <tr class="bg-white hover:bg-indigo-50 transition">
                         <td class="px-6 py-5 font-medium text-slate-800">
                             <button onclick="alert(`{{ $question->question_text }}`)" class="text-indigo-600 hover:underline">
-                                {{ Str::limit($question->question_text, 50, '...') }}
+                                {{ $question->short_text }}
+
                             </button>
                         </td>
                         <td class="px-6 py-5 text-slate-700">

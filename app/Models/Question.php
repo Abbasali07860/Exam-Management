@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Question extends Model
 {
     protected $fillable = [
+        'exam_id',
         'subject_id',
         'type',
         'question_text',
@@ -22,5 +23,10 @@ class Question extends Model
     public function subject()
     {
         return $this->belongsTo(Subject::class);
+    }
+
+    public function exam()
+    {
+        return $this->belongsTo(Exam::class);
     }
 }

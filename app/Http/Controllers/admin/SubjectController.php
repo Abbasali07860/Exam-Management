@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\admin;
 
-use App\Http\Controllers\admin\Controller;
+use App\Http\Controllers\Controller;
 use App\Models\Subject;
 use App\Models\Classroom;
 use App\Models\User;

@@ -2,43 +2,44 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\WelcomeMail;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class RegisterController extends Controller
 {
     public function showForm()
     {
-        return view('auth.register'); 
+        return view('auth.register');
     }
 
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name'     => 'required|string|max:255',
-            'email'    => 'required|email|unique:users,email',
-            'password' => 'required|string|min:6',
-            'mobile'   => 'required|digits:10', 
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:8'],
+            'mobile' => ['required', 'numeric'],
+            'role' => ['required', 'in:student,teacher'],
         ]);
 
         if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
+            // Convert validation errors into a single error message
+            $errors = $validator->errors()->all();
+            $errorMessage = implode(' ', $errors);
+            return back()->with('error', $errorMessage ?: 'Please fill in all required fields.')->withInput();
         }
 
-        // Create user
         $user = User::create([
-            'name'     => $request->name,
-            'email'    => $request->email,
+            'name' => $request->name,
+            'email' => $request->email,
             'password' => Hash::make($request->password),
-            'mobile'   => $request->mobile,
+            'mobile' => $request->mobile,
+            'role' => $request->role,
         ]);
 
-        // Send Welcome Email
-        // Mail::to($user->email)->send(new WelcomeMail($user));
         return redirect()->route('login')->with('success', 'Registration successful. Please login.');
     }
 }

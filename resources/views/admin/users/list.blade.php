@@ -109,7 +109,7 @@
                         </td>
                         <td class="px-6 py-4 font-semibold text-gray-900">{{ $user->name }}</td>
                         <td class="px-6 py-4 text-gray-700">{{ $user->email }}</td>
-                        <td class="px-6 py-4 text-gray-700">{{ $user->mobile }}</td>
+                        <td class="px-6 py-4 text-gray-700">{{ $user->mobile ?? 'N/A' }}</td>
                         <td class="px-6 py-4 text-gray-700">{{ ucfirst($user->role) }}</td>
                         <td class="px-6 py-4">
                             <span class="inline-block px-4 py-1 rounded-full text-sm font-semibold
@@ -124,14 +124,13 @@
                                                hover:bg-gray-300 transition-all duration-300 shadow-md">
                                    ✏️ <span>Edit</span>
                                 </a>
-                                <form method="POST" action="{{ route('admin.users.destroy', $user->id) }}" class="inline-block">
+                                <form method="POST" action="{{ route('admin.users.destroy', $user->id) }}" class="inline-block" onsubmit="return confirm('Are you sure you want to delete this user?')">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit"
                                             class="flex items-center gap-2 bg-red-600 text-white px-4 py-2 rounded-lg font-semibold 
-                                                        hover:bg-red-700 transition-all duration-300 shadow-md"
-                                            onclick="return confirm('Are you sure you want to delete this user?')">
-                                       🗑️ <span>Delete</span>
+                                                hover:bg-red-700 transition-all duration-300 shadow-md">
+                                        🗑️ <span>Delete</span>
                                     </button>
                                 </form>
                             </div>
@@ -145,7 +144,7 @@
 
         @if(!$users->isEmpty())
         <div class="mt-8 flex justify-center">
-            {{ $users->links() }}
+            {{ $users->links('vendor.pagination.tailwind') }}
         </div>
         @endif
     </form>
@@ -187,14 +186,6 @@
             checkboxes: document.querySelectorAll('.user-checkbox'),
             selectAll: document.getElementById('select-all'),
             form: document.getElementById('bulk-status-form')
-        };
-
-        const debounce = (fn, delay) => {
-            let timeout;
-            return (...args) => {
-                clearTimeout(timeout);
-                timeout = setTimeout(() => fn(...args), delay);
-            };
         };
 
         const toggleModal = (show) => {

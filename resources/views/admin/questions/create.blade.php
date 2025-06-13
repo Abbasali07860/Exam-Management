@@ -10,6 +10,22 @@
         @csrf
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <!-- Exam Selection -->
+            <div class="lg:col-span-2">
+                <label for="exam_id" class="block text-sm font-semibold text-slate-800 mb-2">Exam (Optional)</label>
+                <select name="exam_id" id="exam_id" class="w-full border-2 border-slate-300 px-4 py-3 rounded-xl focus:ring-teal-500 focus:border-teal-500 transition-all duration-300 text-slate-700">
+                    <option value="">Select an Exam</option>
+                    @foreach($exams as $exam)
+                        <option value="{{ $exam->id }}" {{ old('exam_id') == $exam->id ? 'selected' : '' }}>
+                            {{ $exam->title }}
+                        </option>
+                    @endforeach
+                </select>
+                @error('exam_id')
+                    <p class="text-red-500 text-sm mt-2 p-2 bg-red-50 rounded-lg border border-red-200">{{ $message }}</p>
+                @enderror
+            </div>
+
             <!-- Subject Selection -->
             <div class="lg:col-span-2">
                 <label for="subject_id" class="block text-sm font-semibold text-slate-800 mb-2">Subject (Optional)</label>
@@ -67,7 +83,7 @@
             </div>
 
             <!-- Correct Answer -->
-            <div id="correct-answer-mcq" class="mb-6 {{ $question->type !== 'mcq' ? 'hidden' : '' }}">
+            <div id="correct-answer-mcq" class="mb-6 hidden">
                 <label for="correct_answer_mcq" class="block text-sm font-semibold text-slate-800 mb-2">Correct Answer (MCQ)</label>
                 <select name="correct_answer" id="correct_answer_mcq" class="w-full border-2 border-slate-300 px-4 py-3 rounded-xl focus:ring-teal-500 focus:border-teal-500 transition-all duration-300 text-slate-700">
                     <option value="">Select Correct Option</option>

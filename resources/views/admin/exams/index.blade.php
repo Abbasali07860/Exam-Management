@@ -71,21 +71,21 @@
                                     </td>
                                     <td class="px-6 py-4">
                                         <div class="flex items-center gap-4">
-                                            <!-- Existing Edit Button -->
+                                            <!-- Edit Button -->
                                             <a href="{{ route('admin.exams.edit', $exam->id) }}"
                                             class="flex items-center gap-2 bg-gray-200 text-gray-800 px-4 py-2 rounded-lg font-semibold 
                                             hover:bg-gray-300 transition-all duration-300 shadow-md">
                                                 ✏️ <span>Edit</span>
                                             </a>
 
-                                            <!-- New Instructions Button -->
+                                            <!-- Instructions Button -->
                                             <a href="{{ route('admin.exams.instructions', $exam->id) }}"
                                             class="flex items-center gap-2 bg-indigo-200 text-indigo-800 px-4 py-2 rounded-lg font-semibold 
                                             hover:bg-indigo-300 transition-all duration-300 shadow-md">
                                                 📜 <span>Instructions</span>
                                             </a>
 
-                                            <!-- Existing Delete Button -->
+                                            <!-- Delete Button -->
                                             <form method="POST" action="{{ route('admin.exams.destroy', $exam->id) }}" class="inline-block">
                                                 @csrf
                                                 @method('DELETE')

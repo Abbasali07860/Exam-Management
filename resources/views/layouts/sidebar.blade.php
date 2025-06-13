@@ -40,6 +40,12 @@
                 </a>
             </li>
             <li>
+                <a href="{{ route('admin.results.index') }}" class="menu-item">
+                    <i class="fas fa-file-alt"></i>
+                    <span>Result Management</span>
+                </a>
+            </li>
+            <li>
                 <a href="#" class="menu-item">
                     <i class="fas fa-credit-card"></i>
                     <span>Payments</span>

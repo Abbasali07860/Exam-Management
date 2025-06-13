@@ -27,6 +27,23 @@
                 @enderror
             </div>
 
+            <!-- Subject -->
+            <div class="mb-6">
+                <label for="subject_id" class="block text-sm font-medium text-gray-700 mb-2">Subject</label>
+                <select name="subject_id" id="subject_id"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-200"
+                        required>
+                    <option value="" disabled {{ old('subject_id') ? '' : 'selected' }}>Select a subject</option>
+                    @foreach ($subjects as $subject)
+                        <option value="{{ $subject->id }}" {{ old('subject_id') == $subject->id ? 'selected' : '' }}>
+                            {{ $subject->name }}
+                        </option>
+                    @endforeach
+                </select>
+                @error('subject_id')
+                    <span class="text-red-600 text-sm mt-1">{{ $message }}</span>
+                @enderror
+            </div>
             <!-- Description -->
             <div class="mb-6">
                 <label for="description" class="block text-sm font-medium text-gray-700 mb-2">Description</label>
@@ -40,7 +57,7 @@
 
             <!-- Start Date -->
             <div class="mb-6">
-                <label for="start_date" class="block text-sm font-medium text-gray-700 mb-2">Start Date</label>
+                <label for="start_date" class="block text-sm font-medium text-gray-700 mb-2">Start Date (IST)</label>
                 <input type="datetime-local" name="start_date" id="start_date" value="{{ old('start_date') }}"
                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-200"
                        required>
@@ -51,7 +68,7 @@
 
             <!-- End Date -->
             <div class="mb-6">
-                <label for="end_date" class="block text-sm font-medium text-gray-700 mb-2">End Date</label>
+                <label for="end_date" class="block text-sm font-medium text-gray-700 mb-2">End Date (IST)</label>
                 <input type="datetime-local" name="end_date" id="end_date" value="{{ old('end_date') }}"
                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-200"
                        required>
@@ -87,8 +104,8 @@
 
             <!-- Assign Students -->
             <div class="mb-6">
-                <label for="student_ids" class="block text-sm font-medium text-gray-700 mb-2">Assign to Students (Optional)</label>
-                <select name="user_ids[]" id="student_ids" multiple
+                <label for="user_ids" class="block text-sm font-medium text-gray-700 mb-2">Assign to Students (Optional)</label>
+                <select name="user_ids[]" id="user_ids" multiple
                         class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-200">
                     @if($users->where('role', 'student')->isNotEmpty())
                         @foreach ($users->where('role', 'student') as $student)

@@ -1,5 +1,5 @@
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<meta name="csrf-token" content="{{ csrf_token() }}">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
 <script>
@@ -20,17 +20,24 @@
         "hideMethod": "fadeOut",
         "rtl": true
     };
-
-    @if(Session::has('success'))
-        toastr.success("{{ Session::get('success') }}");
-    @endif
-
-    @if(Session::has('error'))
-        toastr.error("{{ Session::get('error') }}");
-    @endif
-
-    @foreach ($errors->all() as $error)
-        toastr.error("{{ $error }}");
-    @endforeach
-
 </script>
+
+@if(session()->has('success'))
+    <script>
+        toastr.success("{{ session('success') }}");
+    </script>
+@endif
+
+@if(session()->has('error'))
+    <script>
+        toastr.error("{{ session('error') }}");
+    </script>
+@endif
+
+@if ($errors->any())
+    <script>
+        @foreach ($errors->all() as $error)
+            toastr.error("{{ $error }}");
+        @endforeach
+    </script>
+@endif
